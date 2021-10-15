@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<title>Listado Clientes</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+	<section th:fragment="listadoClientes" id="clientes">
+		<div class="container">
+			<div class="row">
+				<div class="col-auto col-sm-auto col-md-auto col-lg-auto">
+					<div class="card">
+						<div th:classappend="'alert-' + (${clase != null} ? ${clase} : info)" th:if="${mensaje != null}" th:text="${mensaje}" 
+							class="alert alert-dismissible fade show" role="alert">
+							<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="card-header">
+							<h4>[[#{persona.titulo-lista}]]</h4>
+						</div>
+						<div th:if="${listPersonas != null and !listPersonas.empty}">
+							<table id="clientesTable" class="table table-stryped">
+								<thead class="thead-dark">
+									<tr>
+										<th>#</th>
+										<th>
+											<a style="color:#ffffff" th:href="@{'/page/' + ${currentPage} + '?sortField=nombre&sortDir=' + ${reverseSortDir}}" th:text="#{persona.nombre}">
+												Nombre</a>
+										</th>
+										<th>
+											<a style="color:#ffffff" th:href="@{'/page/' + ${currentPage} + '?sortField=email&sortDir=' + ${reverseSortDir}}" th:text="#{persona.email}">
+												Email</a>
+										</th>
+										<th>
+											<a style="color:#ffffff" th:href="@{'/page/' + ${currentPage} + '?sortField=telefono&sortDir=' + ${reverseSortDir}}" th:text="#{persona.telefono}">
+												Teléfono</a>
+										</th>
+										<th>
+											<a style="color:#ffffff" th:href="@{'/page/' + ${currentPage} + '?sortField=saldo&sortDir=' + ${reverseSortDir}}" th:text="#{persona.saldo}">
+												Saldo</a>
+										</th>
+										<th></th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									<!-- Recorre el listado agregado al modelo del controlador -->
+									<tr th:each="persona, contador : ${listPersonas}">
+										<td>[[${contador.count}]]</td>
+										<td>[[${persona.nombre} + ' ' + ${persona.apellido}]]</td>
+										<td>[[${persona.email}]]</td>
+										<td>[[${persona.telefono}]]</td>
+										<td>[[${new java.text.DecimalFormat('$#,##0.00').format(persona.saldo)}]]</td>
+										<td>
+											<a sec:authorize="hasRole('ROLE_ADMIN')"
+											th:href="@{/editar/} + ${persona.idPersona}"
+											class="btn btn-secondary"> <i class="fas fa-angle-double-right"></i> [[#{accion.editar}]]
+											</a>
+										</td>
+										<td>
+											<a sec:authorize="hasRole('ROLE_ADMIN')"
+												th:href="@{/eliminar(idPersona=${persona.idPersona})}"
+												class="btn btn-dark"> <i class="fas fa-angle-double-right"></i>[[#{accion.eliminar}]]
+											</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<!-- DINAMIC PAGINATION STANDARD-->
+							<!-- <div th:if = "${totalPages > 1}">
+								<div class="row col-sm-10">
+									<div class="col-auto col-sm-auto col-md-auto" th:text="#{label.paginacion.total}">
+										[[${totalItems}]]
+									</div>
+									<div class="col-auto col-sm-auto col-md-auto">
+										<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+											<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+											<span th:unless="${currentPage != i}">[[${i}]]</span> &nbsp; &nbsp;
+										</span>
+									</div>
+									
+									<div class="col-auto col-sm-auto col-md-auto">
+										<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[#{label.paginacion.siguiente}]]</a>
+										<span th:unless="${currentPage < totalPages}">[[#{label.paginacion.siguiente}]]</span>
+									</div>
+									
+									<div class="col-auto col-sm-auto col-md-auto">
+										<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[#{label.paginacion.ultima}]]</a>
+										<span th:unless="${currentPage < totalPages}">[[#{label.paginacion.ultima}]]</span>
+									</div>
+								</div>
+							</div> -->
+								
+							<!-- DINAMIC BOOTSTRAP PAGINATION -->
+							<hr>
+							<div th:if = "${totalPages > 1}">
+								<nav aria-label="listado Clientes">
+									<ul class="pagination justify-content-center">
+										<li class="page-item">
+											<a class="page-link text-dark border border-black" 	th:if="${currentPage <= totalPages && currentPage > 1}" th:href="@{'/page/' + ${currentPage - 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}" >[[#{label.paginacion.anterior}]]</a>
+											<span class="page-link text-dark border border-black" th:unless="${currentPage <= totalPages && currentPage > 1}">[[#{label.paginacion.anterior}]]</span>
+										</li>
+										
+										<li class="page-item active d-inline p-2">
+											<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+												<a class="page-link d-inline p-2 bg-light text-dark border border-black" th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
+												<span th:unless="${currentPage != i}">[[${i}]]</span>
+											</span>
+										</li>
+										
+										<li class="page-item">
+											<a class="page-link text-dark border border-black" th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[#{label.paginacion.siguiente}]]</a>
+											<span class="page-link text-dark border border-black" th:unless="${currentPage < totalPages}">[[#{label.paginacion.siguiente}]]</span>
+										</li>
+										
+										<li class="page-item">
+											<a class="page-link text-dark border border-black" th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[#{label.paginacion.ultima}]]</a>
+											<span class="page-link text-dark border border-black" th:unless="${currentPage < totalPages}">[[#{label.paginacion.ultima}]]</span>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+						
+						<div class="text-center p-2" th:if="${listPersonas == null or listPersonas.empty}">
+							<span th:text="#{persona.lista-vacia}">Lista vacía</span>
+						</div>
+					</div>
+				</div>
+
+				<div class=" col-md-3">
+					<div class="card text-center bg-danger text-white mb-3">
+						<div class="card-body">
+							<h3 class="card-title" th:text="#{persona.saldoTotal}">Saldo total</h3>
+							<h4 class="card-text">[[${new java.text.DecimalFormat('$#,##0.00').format(saldoTotal)}]]</h4>
+						</div>
+					</div>
+
+					<div class="card text-center bg-success text-white mb-3">
+						<div class="card-body">
+							<h3 class="card-title" th:text="#{persona.totalClientes}">Total Clientes</h3>
+							<h4 class="card-text">
+								<i class="fas fa-users"></i> [[${totalClientes}]]
+							</h4>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

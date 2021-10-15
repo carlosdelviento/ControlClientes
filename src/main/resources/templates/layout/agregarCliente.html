@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="ttp://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<title>Agregar Cliente</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	</head>
+	<body>
+	<section th:fragment="agregarCliente">
+		<div id="agregarCliente" class="modal fade">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header bg-info text-white">
+						<h5 class="modal-title" th:text="#{accion.agregar}">Agregar Cliente</h5>
+						<button class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+					</div>
+					<form action="#" th:action="@{/guardar}" th:object="${persona}" method="POST" class="was-validated">
+						<div class="modal-body">
+							<div class="form-group">
+								<p th:if="${param.error}" class="alert alert-info alert-dismissible fade show error" role="alert">[[#{persona.validar}]]</p>
+							</div>
+							<div class="form-group">
+								<label for="nombre" th:text="#{persona.nombre}">Nombre</label>
+								<input type="text" class="form-control" name="nombre" th:placeholder="#{label.nombre}" pattern="[A-Z][a-z]{3,15}" required autofocus />
+							</div>
+							<div class="form-group">
+								<label for="apellido" th:text="#{persona.apellido}">Apellido</label>
+								<input type="text" class="form-control" name="apellido" th:placeholder="#{label.apellido}" pattern="[A-Z][a-z]{3,15}" required autofocus />
+							</div>
+							<div class="form-group">
+								<label for="email" th:text="#{persona.email}">Email</label>
+								<input type="email" class="form-control" name="email" th:placeholder="#{label.email}" required autofocus />
+							</div>
+							<div class="form-group">
+								<label for="telefono" th:text="#{persona.telefono}">Teléfono</label>
+								<input type="text" class="form-control" name="telefono" th:placeholder="#{label.telefono}" pattern="[0-9]{6,10}" autofocus />
+							</div>
+							<div class="form-group">
+								<label for="saldo" th:text="#{persona.saldo}">Saldo</label>
+								<input type="number" class="form-control" name="saldo" th:placeholder="#{label.saldo}" step="any" required autofocus />
+							</div>
+						</div>
+						<div class="madal-footer">
+							<button class="btn btn-primary" type="submit" th:text="#{accion.guardar}">Guardar</button>
+							<button class="btn btn-secondary" type="reset">Limpiar campos</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
