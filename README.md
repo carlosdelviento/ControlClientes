@@ -98,7 +98,7 @@ Si quisieramos modificar el puerto, que por defecto es el 8080, añadiriamos la 
 server.port = 8090
 ```
 Ejecutamos la primera sentencia, por ejemplo para obtener la persona con identificador 5. Podemos usar el navegador o una herramienta. En este caso haremos uso de Postman:
-- Indicamos la url: http://localhost:8080//webservices/personas/5
+- Indicamos la url: http://localhost:8080/webservices/personas/5
 - Indicamos que es un GET
 - Clicamos "Send"
 Obtenemos la siguiente respuesta:
