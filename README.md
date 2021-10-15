@@ -1,8 +1,8 @@
-# Controlpersonas Web
+# Control Clientes
 Tecnologías: Spring-boot + JPA (Hibernate) + Mysql + REST
 
 ## Abstract
-Aplicación basada en un sistema de login de usuarios y listado de personas para dar de alta,baja y modificación.
+Aplicación basada en ABM de clientes con seguridad incluída mediante login utilizando roles y clase de Usuarios.
 La aplicación esta construida con SpringBoot, versión 2.4.3. Se hace uso de JPA con Hibernate para conectarse a la base de datos (mysql para produción). En si es un CRUD con REST incluído con métodos para acceder al detalle
 de una persona y un CRUD para los ABM.
 Incluye autenticación basica integrada con Spring Security utilizando Roles de la clase Usuario.
@@ -20,7 +20,7 @@ En base a ese modelo se generan a mano las distintas clases , con sus atributos 
 
 En un primer momento utilizamos una Mysql desplegada en local, por lo que añadimos las siguientes lineas al application.properties:
 ```sh
-spring.datasource.url = jdbc:mysql://localhost/controlpersonas?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true #Your db name
+spring.datasource.url = jdbc:mysql://localhost/controlclientes?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true #Your db name
 spring.datasource.username = root #Your user
 spring.datasource.password = secret #Your password
 spring.jpa.database-platform = org.hibernate.dialect.MySQLDialect
