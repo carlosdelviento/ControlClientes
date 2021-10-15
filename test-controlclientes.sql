@@ -39,7 +39,14 @@ CREATE TABLE `persona` (
 
 LOCK TABLES `persona` WRITE;
 /*!40000 ALTER TABLE `persona` DISABLE KEYS */;
-INSERT INTO `persona` VALUES (1,'Juan','Perez','jperez@mail.com',554433212,100),(2,'Karla','Gomez','kgomez@mail.com',33445566,150),(3,'Luis','Lopez','llopez@mail.com',443322121,200);
+INSERT INTO `persona` VALUES (1,'Juan','Perez','jperez@mail.com',554433212,100);
+INSERT INTO `persona` VALUES (2,'Karla','Gomez','kgomez@mail.com',33445566,150);
+INSERT INTO `persona` VALUES (3,'Luis','Lopez','llopez@mail.com',443322121,200);
+INSERT INTO `persona` VALUES (4,'Diego','Domingues','ddominguez@mail.com',443322122,200);
+INSERT INTO `persona` VALUES (5,'Pablo','Pirez','pablopirez@mail.com',443322123,100);
+INSERT INTO `persona` VALUES (6,'Ernesto','Guimenez','eguimenez@mail.com',443322124,400);
+INSERT INTO `persona` VALUES (7,'Felipe','Flores','fflores@mail.com',443322125,200);
+INSERT INTO `persona` VALUES (9,'Fernanda','Fernandez','ffernandez@mail.com',443322127,300);
 /*!40000 ALTER TABLE `persona` ENABLE KEYS */;
 UNLOCK TABLES;
 
